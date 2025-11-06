@@ -1,14 +1,14 @@
 <div align="center">
-  <kbd> <img width="640" height="320" alt="logo_full" src="https://github.com/user-attachments/assets/1089f4d3-87f4-4f74-9ff1-871bafd8e482" /> </kbd>
+  <kbd> <img width="640" height="320" alt="logo_full" src="https://github.com/user-attachments/assets/ee1fae7e-6fe5-4593-8a21-7ce51dc6e72e" /> </kbd>
 
   <h3 align="center">The Mental Metric</h3>
   <a href="#"><strong>Explore Our Website»</strong></a>
     </br>
     </br>
     <p>
-      <img src="https://img.shields.io/github/commit-activity/m/Jackson-Wozniak/TheMentalMetric?style=for-the-badge" alt="commits" />
-      <img src="https://img.shields.io/github/issues/Jackson-Wozniak/TheMentalMetric?color=darkgreen&style=for-the-badge" alt="issues" />
-      <img src="https://img.shields.io/github/languages/count/Jackson-Wozniak/TheMentalMetric?color=purple&style=for-the-badge" alt="languages" />
+      <img src="https://img.shields.io/github/commit-activity/m/Jackson-Wozniak/The-Mental-Metric?style=for-the-badge" alt="commits" />
+      <img src="https://img.shields.io/github/issues/Jackson-Wozniak/The-Mental-Metric?color=darkgreen&style=for-the-badge" alt="issues" />
+      <img src="https://img.shields.io/github/languages/count/Jackson-Wozniak/The-Mental-Metric?color=purple&style=for-the-badge" alt="languages" />
     </p> 
     <a href="https://github.com/Jackson-Wozniak">Github</a>
     ·

@@ -1,6 +1,6 @@
 import type React from "react";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material";
 
 const ContentContainer: React.FC<{
     children?: React.ReactNode
@@ -8,13 +8,10 @@ const ContentContainer: React.FC<{
     const theme = useTheme();
 
     return (
-        <Box width="100%" height="90%" marginBottom="20px" boxSizing="content-box" 
-            display="flex" flexDirection="column"
+        <Box width="100%" minHeight="86%" margin={0} padding={0} boxSizing="content-box" 
+            display="flex" flexDirection="column" overflow="auto"
             sx={{backgroundColor: theme.palette.background.primary}}>
-            <Box height="98%" overflow="auto">
-                {children}
-            </Box>
-            <Box height="2%" width="100%"></Box>
+            {children}
         </Box>
     )
 }

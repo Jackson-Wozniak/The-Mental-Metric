@@ -4,7 +4,6 @@ import { Box, Typography, Button } from "@mui/material";
 import { CenteredFullWindow } from "../../styles/Shared";
 import { GRID_RECALL_ALLOWED_MISSES } from "../../utils/GridRecall/GridRecallProperties";
 import type { GridRecallPerformanceReport } from "../../types/GridRecall/GridRecallDto";
-import { fetchEvalulateGridPerformance } from "../../api/GridRecallClient";
 import 'chart.js/auto'
 import { Line } from 'react-chartjs-2';
 import { BorderColor } from "@mui/icons-material";

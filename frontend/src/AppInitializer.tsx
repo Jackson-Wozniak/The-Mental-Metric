@@ -7,7 +7,7 @@ import { DarkTheme, LightTheme } from "./themes/Theme";
 import Page from "./components/Shared/Page";
 
 const AppInitializer: React.FC = () => {
-    const [mode, setMode] = useState<'light' | 'dark'>('light');
+    const [mode, setMode] = useState<'light' | 'dark'>('dark');
     const [displayType, setDisplayType] = useState<'desktop' | 'mobile'>();
     const [width, setWidth] = useState<number>(window.innerWidth);
     const [height, setHeight] = useState<number>(window.innerHeight);
@@ -27,8 +27,8 @@ const AppInitializer: React.FC = () => {
 		<ThemeProvider theme={mode === 'light' ? LightTheme(displayType, width, height) : DarkTheme(displayType, width, height)}>
             <BrowserRouter>
                 <Routes>
-                    <Route index element={<Page setMode={setMode} component={<HomePage/>} />} />
-                    <Route path="GridRecall" element={<Page setMode={setMode} component={<GridRecallPage/>} />}/>
+                    <Route index element={<HomePage/>} />
+                    <Route path="GridRecall" element={<GridRecallPage/>}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

@@ -6,6 +6,7 @@ import type { GridRecallState } from "./GridDispatch";
 import GridGameSummary from "./GridGameSummary";
 import { toGridRecallPerformance, type GridRecallPerformance } from "../../types/GridRecall/GridRecall";
 import { CenteredFullWindow } from "../../styles/Shared";
+import Page from "../Shared/Page";
 
 const GridRecallPage: React.FC = () => {
     const [gameEnded, setGameEnded] = useState<boolean>();
@@ -25,11 +26,11 @@ const GridRecallPage: React.FC = () => {
     }
 
     return (
-        <ContentContainer>
+        <Page>
             <Box sx={{display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center"}}>
                 <GameGrid endGame={handleGameOver}/>
             </Box>
-        </ContentContainer>
+        </Page>
     )
 }
 

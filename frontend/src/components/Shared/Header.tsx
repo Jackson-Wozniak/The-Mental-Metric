@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import type { HeaderEntry } from "../../types/Header";
 import type React from "react";
 import HomeImage from './../../assets/logo_full.png';
 import { Games, type Game } from "../../types/GameInfo";
@@ -55,20 +54,18 @@ const HeaderLink: React.FC<{item: Game}> = ({item}) => {
     )
 }
 
-const Header: React.FC<{
-    setMode: (mode: 'light' | 'dark') => void
-}> = ({setMode}) => {
+const Header: React.FC<{}> = () => {
     const theme = useTheme();
 
     function handleModeSwitch(e: SelectChangeEvent<'light' | 'dark'>){
         e.preventDefault();
-        setMode(e.target.value);
+        //TODO: change to dark/light mode globally
     }
 
     if(theme.display === 'mobile'){
         return (
-            <Box width="100%" height="7%" sx={{backgroundColor: theme.palette.background.secondary}}
-                display="flex" justifyContent="space-between" alignItems="center"
+            <Box width="100%" height="10%" sx={{backgroundColor: theme.palette.background.secondary}}
+                display="flex" justifyContent="space-between" alignItems="center" margin={0} padding={0}
             >
                 <Link to={"/"} style={{height: "100%"}}>
                     <img src={HomeImage} height="100%" style={{width: "auto"}}/>
@@ -95,7 +92,7 @@ const Header: React.FC<{
 
     return (
         <Box width="100%" height="10%" sx={{backgroundColor: theme.palette.background.secondary}}
-            display="flex" justifyContent="space-between" alignItems="center"
+            display="flex" justifyContent="space-between" alignItems="center" margin={0}
         >
             <Stack height="100%" direction="row" display="flex" justifyContent="space-evenly" gap={0}>
                 <Link to={"/"} style={{height: "100%"}}>

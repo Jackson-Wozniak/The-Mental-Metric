@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import { Games, type Game } from "../../types/GameInfo";
-import ContentContainer from "../Shared/ContentContainer";
 import GameCard from "./GameCard";
 import type { GameSessionRecord } from "../../types/Game";
 import { Typography, Divider, Stack, useTheme } from "@mui/material";
 import type React from "react";
+import Page from "../Shared/Page";
 
 const testRecords: GameSessionRecord[] = [
     {game: "Grid Recall", score: 12, timePlayed: new Date()},
@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
     const theme = useTheme();
 
     return (
-        <ContentContainer>
+        <Page>
             <Box width="100%" height="100%" display="flex" justifyContent="center">
                 <Box sx={{display: "flex", flexWrap: "wrap", justifyContent: "center", 
                     gap: "40px", width: "60%", marginTop: "35px"}}>
@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
                     </Stack>
                 </Box>
             </Box>
-        </ContentContainer>
+        </Page>
     )
 }
 

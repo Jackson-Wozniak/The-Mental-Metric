@@ -8,6 +8,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import type React from "react";
 import HomeImage from './../../assets/logo_full.png';
 import { Games, type Game } from "../../types/GameInfo";
+import { useThemeContext } from "../../AppInitializer";
 
 const selectStyling = (theme: Theme) => { return {
     margin: "0px 15px 0px 15px",
@@ -56,10 +57,11 @@ const HeaderLink: React.FC<{item: Game}> = ({item}) => {
 
 const Header: React.FC<{}> = () => {
     const theme = useTheme();
+    const modeContext = useThemeContext();
 
     function handleModeSwitch(e: SelectChangeEvent<'light' | 'dark'>){
         e.preventDefault();
-        //TODO: change to dark/light mode globally
+        modeContext?.setMode(e.target.value)
     }
 
     if(theme.display === 'mobile'){

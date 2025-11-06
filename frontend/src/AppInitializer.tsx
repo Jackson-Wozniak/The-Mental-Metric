@@ -1,13 +1,20 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./components/HomePage/HomePage";
 import GridRecallPage from "./components/GridRecall/GridRecallPage";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { DarkTheme, LightTheme } from "./themes/Theme";
-import Page from "./components/Shared/Page";
+
+interface ModeContextType {
+  mode: "light" | "dark";
+  setMode: (mode: "light" | "dark") => void;
+}
+
+const ModeContext = createContext<ModeContextType | undefined>(undefined);
+export const useThemeContext = () => useContext(ModeContext);
 
 const AppInitializer: React.FC = () => {
-    const [mode, setMode] = useState<'light' | 'dark'>('dark');
+    const [mode, setMode] = useState<"light" | "dark">('dark');
     const [displayType, setDisplayType] = useState<'desktop' | 'mobile'>();
     const [width, setWidth] = useState<number>(window.innerWidth);
     const [height, setHeight] = useState<number>(window.innerHeight);
@@ -24,7 +31,8 @@ const AppInitializer: React.FC = () => {
     }, []);
 
 	return (
-		<ThemeProvider theme={mode === 'light' ? LightTheme(displayType, width, height) : DarkTheme(displayType, width, height)}>
+		<ModeContext.Provider value={{mode, setMode}}>
+            <ThemeProvider theme={mode === 'light' ? LightTheme(displayType, width, height) : DarkTheme(displayType, width, height)}>
             <BrowserRouter>
                 <Routes>
                     <Route index element={<HomePage/>} />
@@ -32,6 +40,7 @@ const AppInitializer: React.FC = () => {
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
+        </ModeContext.Provider>
 	)
 }
 

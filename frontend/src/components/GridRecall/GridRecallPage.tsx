@@ -27,9 +27,7 @@ const GridRecallPage: React.FC = () => {
 
     return (
         <Page>
-            <Box sx={{display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center"}}>
-                <GameGrid endGame={handleGameOver}/>
-            </Box>
+            <GameGrid endGame={handleGameOver}/>
         </Page>
     )
 }

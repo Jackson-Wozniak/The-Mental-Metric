@@ -8,10 +8,12 @@ const ContentContainer: React.FC<{
     const theme = useTheme();
 
     return (
-        <Box width="100%" minHeight="86%" margin={0} padding={0} boxSizing="content-box" 
-            display="flex" flexDirection="column" overflow="auto"
+        <Box width="100%" minHeight="90%" margin={0} padding={0} boxSizing="content-box" 
+            display="flex" flexDirection="column" overflow="visible"
             sx={{backgroundColor: theme.palette.background.primary}}>
-            {children}
+            <Box sx={{ height: "100%", flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
+                {children}
+            </Box>
         </Box>
     )
 }

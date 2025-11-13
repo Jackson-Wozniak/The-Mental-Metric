@@ -23,13 +23,14 @@ export interface GridButtonInfo {
 
 const ButtonGrid: React.FC<{
     level: number,
-    livesLeft: number
-}> = ({level, livesLeft}) => {
+    livesLeft: number,
+    handleIncorrectGuess: () => void,
+    completeLevel: () => void
+}> = ({level, handleIncorrectGuess, completeLevel}) => {
     const theme = useTheme();
 
     const [buttonsInfo, setButtonsInfo] = useState<GridButtonInfo[]>([]);
-    const [missesAllowed, setMissesAllowed] = useState<number>(livesLeft);
-    const [areButtonsFlashed, setAreButtonsFlashed] = useState<boolean>(false);
+    const [timerRunning, setTimerRunning] = useState(true);
     const [correctGuessesLeft, setCorrectGuessesLeft] = useState<number>(0);
 
     useEffect(() => {
@@ -38,10 +39,12 @@ const ButtonGrid: React.FC<{
 
         let buttons: GridButtonInfo[] = generateButtons(properties);
         setButtonsInfo([...buttons]);
+        setTimerRunning(true);
 
         const timer = setTimeout(() => {
             buttons.forEach(b => b.currentState = ButtonState.NONE);
             setButtonsInfo([...buttons]);
+            setTimerRunning(false);
         }, properties.buttonFlashMillis);
 
         return () => clearTimeout(timer);
@@ -79,6 +82,9 @@ const ButtonGrid: React.FC<{
     }
 
     function handleButtonClick(id: number){
+        //ignore presses before level starts and buttons are set
+        if(timerRunning) return;
+
         const buttonsCopy = [...buttonsInfo];
         
         buttonsCopy.forEach((button: GridButtonInfo) => {
@@ -87,14 +93,17 @@ const ButtonGrid: React.FC<{
             //correct guess
             if(button.didFlashThisLevel){
                 button.currentState = ButtonState.GUESSED_CORRECT;
+                if(correctGuessesLeft <= 1){
+                    completeLevel();
+                    return;
+                }
                 setCorrectGuessesLeft(correctGuessesLeft - 1);
-                //handle end of level if needed here
                 return;
             }
 
             //incorrect guess
             button.currentState = ButtonState.GUESSES_INCORRECT;
-            setMissesAllowed(missesAllowed - 1);
+            handleIncorrectGuess();
         });
 
         setButtonsInfo([...buttonsCopy]);

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./components/HomePage/HomePage";
-import GridRecallPage from "./components/GridRecall/GridRecallPage";
+import HomePage from "./components/pages/HomePage/HomePage";
+import GridRecallPage from "./components/pages/GridRecall/GridRecallPage";
 import { createContext, useContext, useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { DarkTheme, LightTheme } from "./themes/Theme";

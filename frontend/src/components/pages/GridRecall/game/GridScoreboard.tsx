@@ -1,7 +1,6 @@
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { CenteredFullWindow } from "../../../styles/Shared";
-import { GRID_RECALL_ALLOWED_MISSES } from "../../../utils/GridRecall/GridRecallProperties";
+import { GRID_RECALL_ALLOWED_MISSES } from "../../../../utils/GridRecall/GridRecallProperties";
+import CenteredFlexBox from "../../../shared/CenteredFlexBox";
 
 
 const GridScoreboard: React.FC<{
@@ -9,10 +8,10 @@ const GridScoreboard: React.FC<{
     livesLeft: number,
 }> = ({level, livesLeft}) => {
     return (
-        <Box width="100%" height="10%" sx={CenteredFullWindow("row")}>
+        <CenteredFlexBox sx={{height: "10%"}}>
             <Typography color="textPrimary" variant="h5" marginRight={10}>Level {level}</Typography>
             <Typography color="textPrimary" variant="body1">{livesLeft} / {GRID_RECALL_ALLOWED_MISSES} Lives Remaining</Typography>
-        </Box>
+        </CenteredFlexBox>
     )
 }
 

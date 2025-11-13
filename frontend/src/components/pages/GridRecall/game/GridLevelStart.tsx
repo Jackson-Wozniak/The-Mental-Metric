@@ -1,9 +1,9 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { GRID_RECALL_ALLOWED_MISSES } from "../../../utils/GridRecall/GridRecallProperties";
-import { CenteredFullWindow } from "../../../styles/Shared";
-import { Box, Stack, useTheme } from "@mui/material";
+import { GRID_RECALL_ALLOWED_MISSES } from "../../../../utils/GridRecall/GridRecallProperties";
+import { Stack, useTheme } from "@mui/material";
 import Favorite from "@mui/icons-material/Favorite";
+import CenteredFlexBox from "../../../shared/CenteredFlexBox";
 
 
 const GridLevelStart: React.FC<{
@@ -14,7 +14,7 @@ const GridLevelStart: React.FC<{
     const theme = useTheme();
 
     return (
-        <Box sx={CenteredFullWindow()}>
+        <CenteredFlexBox>
             <Typography variant="h3" color="textPrimary">Level {level}</Typography>
             <br/>
             <Stack width="100%" display="flex" justifyContent="center" alignItems="center" direction="row">
@@ -29,7 +29,7 @@ const GridLevelStart: React.FC<{
             </Stack>
             <br/>
             <Button onClick={startLevel} variant="contained" color="primary">Start</Button>
-        </Box>
+        </CenteredFlexBox>
     )
 }
 

@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
-import { Games, type Game } from "../../types/GameInfo";
+import { Games, type Game } from "../../../types/GameInfo";
 import GameCard from "./GameCard";
-import type { GameSessionRecord } from "../../types/Game";
+import type { GameSessionRecord } from "../../../types/Game";
 import { Typography, Divider, Stack, useTheme } from "@mui/material";
 import type React from "react";
-import Page from "../Shared/Page";
+import Page from "../../layout/Page";
 
 const testRecords: GameSessionRecord[] = [
     {game: "Grid Recall", score: 12, timePlayed: new Date()},

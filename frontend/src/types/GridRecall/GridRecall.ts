@@ -1,4 +1,4 @@
-import type { GridLevelStats, GridRecallState } from "../../components/GridRecall/GridDispatch";
+import type { GridLevelStats, GridRecallState } from "../../components/pages/GridRecall/GridDispatch";
 import { findGridLevelProperties, MAX_GRID_WIDTH } from "../../utils/GridRecall/GridRecallProperties";
 import type { ButtonState } from "./GridEnums";
 

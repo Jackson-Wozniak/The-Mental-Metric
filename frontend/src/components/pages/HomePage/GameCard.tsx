@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import type { Game } from "../../types/GameInfo";
+import type { Game } from "../../../types/GameInfo";
 import { Button, Divider, IconButton, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';

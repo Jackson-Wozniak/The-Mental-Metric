@@ -1,4 +1,4 @@
-import { GRID_RECALL_ALLOWED_MISSES } from "../../utils/GridRecall/GridRecallProperties"
+import { GRID_RECALL_ALLOWED_MISSES } from "../../../utils/GridRecall/GridRecallProperties"
 
 export interface GridLevelStats {
     level: number,

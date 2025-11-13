@@ -1,13 +1,13 @@
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useEffect, useReducer, useState } from 'react';
-import { findGridLevelProperties, MAX_GRID_WIDTH, type GridLevelProperties } from '../../utils/GridRecall/GridRecallProperties';
+import { findGridLevelProperties, MAX_GRID_WIDTH, type GridLevelProperties } from '../../../utils/GridRecall/GridRecallProperties';
 import { GridRecallReducer, inititalGridRecallState, type GridRecallState } from './GridDispatch';
 import React from 'react';
-import { ButtonState } from '../../types/GridRecall/GridEnums';
-import type { GridButtonState } from '../../types/GridRecall/GridRecall';
+import { ButtonState } from '../../../types/GridRecall/GridEnums';
+import type { GridButtonState } from '../../../types/GridRecall/GridRecall';
 import GridLevelStart from './game/GridLevelStart';
 import GridScoreboard from './game/GridScoreboard';
-import { CenteredFullWindow } from '../../styles/Shared';
+import CenteredFlexBox from '../../shared/CenteredFlexBox';
 
 /*
 Stats to gather:
@@ -132,7 +132,7 @@ const GameGrid: React.FC<{
     }
 
     return (
-        <Box sx={CenteredFullWindow()}>
+        <CenteredFlexBox>
             <GridScoreboard level={gameState.level} livesLeft={gameState.missesLeft}/>
             <Box
                 sx={{
@@ -153,7 +153,7 @@ const GameGrid: React.FC<{
                 )
             })}
             </Box>
-        </Box>
+        </CenteredFlexBox>
     )
 }
 

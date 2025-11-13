@@ -21,13 +21,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\Core\Entity\" />
-      <Folder Include="src\Core\Enums\" />
       <Folder Include="src\Core\Infrastructure\" />
       <Folder Include="src\Core\Repository\" />
       <Folder Include="src\Core\Service\" />
       <Folder Include="src\Core\Utils\" />
-      <Folder Include="src\Games\" />
+      <Folder Include="src\Games\GridRecall\Controller\" />
+      <Folder Include="src\Games\GridRecall\Dto\" />
+      <Folder Include="src\Games\GridRecall\Enums\" />
+      <Folder Include="src\Games\GridRecall\Service\" />
+      <Folder Include="src\Games\GridRecall\Utils\" />
     </ItemGroup>
 
 </Project>

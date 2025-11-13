@@ -14,7 +14,7 @@ const GridLevelStart: React.FC<{
     const theme = useTheme();
 
     return (
-        <CenteredFlexBox>
+        <CenteredFlexBox displayDirection="column">
             <Typography variant="h3" color="textPrimary">Level {level}</Typography>
             <br/>
             <Stack width="100%" display="flex" justifyContent="center" alignItems="center" direction="row">

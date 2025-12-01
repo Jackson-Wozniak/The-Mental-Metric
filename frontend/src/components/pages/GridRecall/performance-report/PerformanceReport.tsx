@@ -6,11 +6,19 @@ import CenteredFlexBox from "../../../shared/CenteredFlexBox";
 const PerformanceReport: React.FC<{
     report: GridRecallPerformanceReport
 }> = ({report}) => {
+    function mapToString(){
+        let customString = '';
+        report.usersPerLevelMap.forEach((value, key) => {
+            customString += `${key}: ${value}, `;
+        });
+        return customString;
+    }
+
     return (
         <CenteredFlexBox displayDirection="column">
             <Typography>Percentile: {report.finalLevelPercentile}</Typography>
             <Typography>Total Users: {report.totalUsers}</Typography>
-            <Typography>Histogram: {report.usersPerLevelMap}</Typography>
+            <Typography>Histogram: {mapToString()}</Typography>
         </CenteredFlexBox>
     )
 }

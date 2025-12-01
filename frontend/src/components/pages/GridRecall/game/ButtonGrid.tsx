@@ -92,6 +92,7 @@ const ButtonGrid: React.FC<{
 
             //correct guess
             if(button.didFlashThisLevel){
+                if(button.currentState == ButtonState.GUESSED_CORRECT) return; //no duplicate correct
                 button.currentState = ButtonState.GUESSED_CORRECT;
                 if(correctGuessesLeft <= 1){
                     completeLevel();
@@ -121,7 +122,7 @@ const ButtonGrid: React.FC<{
                 marginBottom: "15px"
             }}
         >{buttonsInfo.map((button: GridButtonInfo) => {
-            return <GridButton info={button} handleButtonClick={() => handleButtonClick(button.id)}/>
+            return <GridButton key={button.id} info={button} handleButtonClick={() => handleButtonClick(button.id)}/>
         })}</Box>
     )
 }

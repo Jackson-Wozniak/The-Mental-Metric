@@ -19,7 +19,7 @@ const GridRecallPage: React.FC = () => {
         });
     }
 
-    if(gameEnded){
+    if(gameEnded && performanceReport == undefined){
         return (
             <CircularProgress />
         )

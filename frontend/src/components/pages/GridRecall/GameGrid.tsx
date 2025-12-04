@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import React from 'react';
 import GridLevelStart from './game/GridLevelStart';
 import GridScoreboard from './game/GridScoreboard';
@@ -6,28 +6,29 @@ import CenteredFlexBox from '../../shared/CenteredFlexBox';
 import ButtonGrid from './game/ButtonGrid';
 import { GRID_RECALL_ALLOWED_MISSES } from '../../../config/GridRecallConstants';
 import type { GridRecallPerformanceStats } from '../../../types/GridRecall/GridRecallTypes';
+import { GridRecallReducer, inititalGridRecallState } from './GridDispatch';
 
 const GameGrid: React.FC<{
     handleGameEnd: (stats: GridRecallPerformanceStats) => void
 }> = ({handleGameEnd}) => {
-    const [level, setLevel] = useState(1);
+    const [gridRecallState, gridRecallDispatch] = useReducer(GridRecallReducer, inititalGridRecallState);
     const [livesRemaining, setLivesRemaining] = useState(GRID_RECALL_ALLOWED_MISSES);
-    const [levelStarted, setLevelStarted] = useState<boolean>(false);
+    const [isLevelStarted, setIsLevelStarted] = useState<boolean>(false);
 
-    if(!levelStarted){
+    if(!isLevelStarted){
         return (
-            <GridLevelStart level={level} startLevel={() => setLevelStarted(true)} missesLeft={livesRemaining}/>
+            <GridLevelStart level={gridRecallState.level} startLevel={() => setIsLevelStarted(true)} missesLeft={livesRemaining}/>
         )
     }
 
     function handleLevelEnd(){
-        setLevelStarted(false);
-        setLevel(level + 1);
+        setIsLevelStarted(false);
+        gridRecallDispatch({type: "IncrementLevel"});
     }
 
     function handleIncorrectGuess(){
         if(livesRemaining == 1){
-            handleGameEnd({finalLevel: level});
+            handleGameEnd({finalLevel: gridRecallState.level});
             return;
         }
         setLivesRemaining(livesRemaining - 1);
@@ -35,8 +36,8 @@ const GameGrid: React.FC<{
 
     return (
         <CenteredFlexBox displayDirection="column">
-            <GridScoreboard level={level} livesLeft={livesRemaining}/>
-            <ButtonGrid level={level} livesLeft={livesRemaining}
+            <GridScoreboard level={gridRecallState.level} livesLeft={livesRemaining}/>
+            <ButtonGrid level={gridRecallState.level} livesLeft={livesRemaining}
                 handleIncorrectGuess={handleIncorrectGuess} completeLevel={handleLevelEnd}/>
         </CenteredFlexBox>
     )

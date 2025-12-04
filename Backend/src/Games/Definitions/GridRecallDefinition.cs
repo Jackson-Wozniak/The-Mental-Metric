@@ -8,6 +8,21 @@ public class GridRecallDefinition
     //this enforces game-specific attributes during initialization
     public static Game Get()
     {
-        return new Game();
+        var game = new Game
+        {
+            Name = "Grid Recall",
+            TimesPlayed = 0,
+            Metrics = new List<GameMetric>()
+        };
+        
+        game.Metrics.Add(new GameMetric
+        {
+            Game = game,
+            MetricName = "Level",
+            HistogramBucketInterval = 1,
+            HistogramBuckets = new List<HistogramBucket>()
+        });
+
+        return game;
     }
 }

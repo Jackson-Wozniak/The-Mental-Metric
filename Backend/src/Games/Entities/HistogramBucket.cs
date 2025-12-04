@@ -5,7 +5,8 @@ namespace Backend.Games.Entities;
 public class HistogramBucket : BaseEntity
 {
     public GameMetric GameMetric { get; set; }
-    public double RangeStart { get; set; }
-    public double RangeEnd { get; set; }
+    public long GameMetricId { get; set; }
+    public double MinValue { get; set; }
+    public double MaxValue { get; set; }
     public long Count { get; set; }
 }

@@ -13,5 +13,17 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<Game>()
+            .HasMany(g => g.Metrics)
+            .WithOne(m => m.Game)
+            .HasForeignKey(m => m.GameId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<GameMetric>()
+            .HasMany(m => m.HistogramBuckets)
+            .WithOne(b => b.GameMetric)
+            .HasForeignKey(b => b.GameMetricId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -12,6 +12,12 @@ public class GameRepository(ApplicationDbContext context)
         context.SaveChanges();
     }
 
+    public async Task SaveAsync(Game game)
+    {
+        await context.Games.AddAsync(game);
+        await context.SaveChangesAsync();
+    }
+
     public void Update(Game game)
     {
         context.Games.Update(game);

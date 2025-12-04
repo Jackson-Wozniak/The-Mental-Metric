@@ -24,10 +24,6 @@
       <Folder Include="src\Core\Infrastructure\" />
       <Folder Include="src\Core\Interfaes\" />
       <Folder Include="src\Core\Utils\" />
-      <Folder Include="src\Games\GridRecall\Controller\" />
-      <Folder Include="src\Games\GridRecall\Dto\" />
-      <Folder Include="src\Games\GridRecall\Service\" />
-      <Folder Include="src\Games\GridRecall\Utils\" />
       <Folder Include="tests\" />
     </ItemGroup>
 

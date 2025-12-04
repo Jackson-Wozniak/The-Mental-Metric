@@ -12,10 +12,26 @@ declare module '@mui/material/styles' {
         display: 'desktop' | 'mobile';
         width: number;
         height: number;
+        gridRecall: {
+            gridButton: {
+                correct: string,
+                incorrect: string,
+                flashed: string,
+                none: string,
+            }
+        }
     }
     interface ThemeOptions {
         display?: 'desktop' | 'mobile';
         width?: number;
         height?: number;
+        gridRecall?: {
+            gridButton: {
+                correct: string,
+                incorrect: string,
+                flashed: string,
+                none: string,
+            }
+        }
     }
 }

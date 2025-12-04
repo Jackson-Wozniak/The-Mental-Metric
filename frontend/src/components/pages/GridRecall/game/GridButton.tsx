@@ -1,17 +1,19 @@
 import Button from "@mui/material/Button";
 import { ButtonState, type GridButtonInfo } from "./ButtonGrid";
-
-function getBackgroundColor(state: ButtonState){
-    if(state == ButtonState.FLASHED) return "#ffffffff";
-    if(state == ButtonState.GUESSED_CORRECT) return "#285523ff";
-    if(state == ButtonState.GUESSES_INCORRECT) return "#d34a4aff";
-    return "#4559cbff";
-}
+import { useTheme } from "@mui/material";
 
 const GridButton: React.FC<{
     info: GridButtonInfo,
     handleButtonClick: (id: number) => void
 }> = ({info, handleButtonClick}) => {
+    const theme = useTheme();
+
+    function getBackgroundColor(state: ButtonState){
+        if(state == ButtonState.FLASHED) return theme.gridRecall.gridButton.flashed;
+        if(state == ButtonState.GUESSED_CORRECT) return theme.gridRecall.gridButton.correct;
+        if(state == ButtonState.GUESSES_INCORRECT) return theme.gridRecall.gridButton.incorrect;
+        return theme.gridRecall.gridButton.none;
+    }
 
     return (
         <Button key={info.id} onClick={() => handleButtonClick(info.id)}

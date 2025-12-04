@@ -24,6 +24,14 @@ export const LightTheme = (displayType: 'desktop' | 'mobile' = 'desktop',
             secondary: "#3d3d3d"
         }
     },
+    gridRecall: {
+        gridButton: {
+            correct: "#285523ff",
+            incorrect: "#d34a4aff",
+            flashed: "#262293ff",
+            none: "#f4f4f4ff",
+        }
+    },
     display: displayType,
     width: width,
     height: height
@@ -50,6 +58,14 @@ export const DarkTheme = (displayType: 'desktop' | 'mobile' = 'desktop',
         text: {
             primary: "#ffffff",
             secondary: "#d0d0d0ff"
+        },
+    },
+    gridRecall: {
+        gridButton: {
+            correct: "#3a9a30ff",
+            incorrect: "#e73333ff",
+            flashed: "#4158eeff",
+            none: "#4a535eff",
         }
     },
     display: displayType,

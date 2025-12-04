@@ -21,7 +21,7 @@ public class GameMetricService(GameRepository gameRepository)
         if (metric is null) throw new NotFoundException("No metric can be found");
 
         HistogramBucket? bucket = metric.HistogramBuckets
-            .SingleOrDefault(b => b.MinValue < value && b.MaxValue > value);
+            .SingleOrDefault(b => b.MinValue <= value && b.MaxValue >= value);
 
         if (bucket is null)
         {
@@ -30,8 +30,8 @@ public class GameMetricService(GameRepository gameRepository)
             {
                 GameMetric = metric,
                 Count = 1,
-                MinValue = value - 1,
-                MaxValue = value + 1
+                Value = value,
+                Delta = metric.HistogramBucketDelta
             };
             metric.HistogramBuckets.Add(bucket);
         }

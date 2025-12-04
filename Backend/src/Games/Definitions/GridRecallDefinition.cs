@@ -15,13 +15,25 @@ public class GridRecallDefinition
             Metrics = new List<GameMetric>()
         };
         
-        game.Metrics.Add(new GameMetric
+        var metric = new GameMetric
         {
             Game = game,
             MetricName = "Level",
-            HistogramBucketInterval = 1,
+            HistogramBucketDelta = 0,
             HistogramBuckets = new List<HistogramBucket>()
-        });
+        };
+        game.Metrics.Add(metric);
+
+        for (int i = 1; i < 30; i++)
+        {
+            metric.HistogramBuckets.Add(new HistogramBucket
+            {
+                Count = 0,
+                GameMetric = metric,
+                Value = i,
+                Delta = metric.HistogramBucketDelta
+            });
+        }
 
         return game;
     }

@@ -14,7 +14,7 @@ public class GameInitializer(IServiceProvider serviceProvider) : BackgroundServi
             using var scope = serviceProvider.CreateScope();
             var gameRepository = scope.ServiceProvider.GetRequiredService<GameRepository>();
             
-            //await gameRepository.SaveAsync(GridRecallDefinition.Get());
+            await gameRepository.SaveAsync(GridRecallDefinition.Get());
         }
     }
 }

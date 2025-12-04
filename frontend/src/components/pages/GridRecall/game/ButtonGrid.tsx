@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { findGridLevelProperties, MAX_GRID_WIDTH, type GridLevelProperties } from "../../../../utils/GridRecall/GridRecallProperties";
+import { findGridLevelProperties, MAX_GRID_WIDTH, type GridLevelProperties } from "../../../../config/GridRecallConstants";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material";
 import GridButton from "./GridButton";

@@ -4,7 +4,7 @@ import GridLevelStart from './game/GridLevelStart';
 import GridScoreboard from './game/GridScoreboard';
 import CenteredFlexBox from '../../shared/CenteredFlexBox';
 import ButtonGrid from './game/ButtonGrid';
-import { GRID_RECALL_ALLOWED_MISSES } from '../../../utils/GridRecall/GridRecallProperties';
+import { GRID_RECALL_ALLOWED_MISSES } from '../../../config/GridRecallConstants';
 import type { GridRecallPerformanceStats } from '../../../types/GridRecall/GridRecallTypes';
 
 const GameGrid: React.FC<{

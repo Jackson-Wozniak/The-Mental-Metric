@@ -3,7 +3,6 @@ import type { GridRecallPerformanceReport } from "../../../../types/GridRecall/G
 import CenteredFlexBox from "../../../shared/CenteredFlexBox";
 import LineChart from "../../../shared/LineChart";
 
-
 const PerformanceReport: React.FC<{
     report: GridRecallPerformanceReport
 }> = ({report}) => {

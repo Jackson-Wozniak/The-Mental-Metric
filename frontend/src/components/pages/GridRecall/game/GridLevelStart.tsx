@@ -1,10 +1,9 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { GRID_RECALL_ALLOWED_MISSES } from "../../../../utils/GridRecall/GridRecallProperties";
+import { GRID_RECALL_ALLOWED_MISSES } from "../../../../config/GridRecallConstants";
 import { Stack, useTheme } from "@mui/material";
 import Favorite from "@mui/icons-material/Favorite";
 import CenteredFlexBox from "../../../shared/CenteredFlexBox";
-
 
 const GridLevelStart: React.FC<{
     level: number,

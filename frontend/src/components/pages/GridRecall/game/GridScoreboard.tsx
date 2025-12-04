@@ -1,7 +1,6 @@
 import Typography from "@mui/material/Typography";
-import { GRID_RECALL_ALLOWED_MISSES } from "../../../../utils/GridRecall/GridRecallProperties";
+import { GRID_RECALL_ALLOWED_MISSES } from "../../../../config/GridRecallConstants";
 import CenteredFlexBox from "../../../shared/CenteredFlexBox";
-
 
 const GridScoreboard: React.FC<{
     level: number,

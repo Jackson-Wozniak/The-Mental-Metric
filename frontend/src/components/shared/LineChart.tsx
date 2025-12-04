@@ -31,7 +31,9 @@ const LineChart: React.FC<{
                 }
             },
             y: {
+                beginAtZero: true,
                 ticks: {
+                    stepSize: 1,
                     color: theme.palette.text.secondary,
                 }
             }

@@ -21,12 +21,18 @@ const GridRecallPage: React.FC = () => {
 
     if(gameEnded && performanceReport == undefined){
         return (
-            <CircularProgress />
+            <Page>
+                <CircularProgress/>
+            </Page>
         )
     }
 
     if(performanceReport != undefined){
-        return <PerformanceReport report={performanceReport}/>
+        return (
+            <Page>
+                <PerformanceReport report={performanceReport}/>
+            </Page>
+        )
     }
 
     return (

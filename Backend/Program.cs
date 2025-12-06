@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging(logging => logging.AddConsole().AddDebug());
+
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbConnectionString");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {

@@ -39,4 +39,9 @@ public class GameRepository(ApplicationDbContext context)
             .ThenInclude(m => m.HistogramBuckets)
             .SingleOrDefault(g => g.Name == name);
     }
+
+    public int Count()
+    {
+        return context.Games.Count();
+    }
 }

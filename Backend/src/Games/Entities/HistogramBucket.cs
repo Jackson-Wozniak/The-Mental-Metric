@@ -14,10 +14,17 @@ public class HistogramBucket : BaseEntity
 
     public bool IsInRange(double value)
     {
+        if ((int)Math.Round(Delta * 100) == 0)
+        {
+            int bucketVal = (int)Math.Round(Value * 100);
+            int val = (int)Math.Round(value * 100);
+            return bucketVal == val;
+        }
+        
         int scaledValue = (int)Math.Round(value * 100);
         int scaledMin = (int)Math.Round(MinValue * 100);
         int scaledMax = (int)Math.Round(MaxValue * 100);
-
+        
         return scaledValue >= scaledMin && scaledValue < scaledMax;
     }
 }

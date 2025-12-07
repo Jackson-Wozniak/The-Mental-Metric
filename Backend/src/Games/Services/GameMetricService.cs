@@ -19,7 +19,7 @@ public class GameMetricService(GameRepository gameRepository)
         GameMetric? metric = game.Metrics
             .SingleOrDefault(m => m.MetricName.Equals(metricName));
         if (metric is null) throw new NotFoundException("No metric can be found");
-
+        
         HistogramBucket? bucket = metric.HistogramBuckets
             .SingleOrDefault(b => b.IsInRange(value));
 

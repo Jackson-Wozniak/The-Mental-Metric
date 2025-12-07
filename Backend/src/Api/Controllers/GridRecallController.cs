@@ -13,7 +13,7 @@ public class GridRecallController(GridRecallService gridRecallService) : Control
     public IActionResult CreatePerformanceReport([FromBody] GridRecallStatsDto stats)
     {
         var mappedStats = stats.Map();
-        var report = gridRecallService.GenerateReport(mappedStats);
+        var report = gridRecallService.CreateReport(mappedStats);
         return Ok(new GridRecallReportDto(report));
     }
 }

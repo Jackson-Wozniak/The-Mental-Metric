@@ -7,6 +7,6 @@ public class GameConstants
 {
     public static readonly Dictionary<string, Game> GameDefinitions = new()
     {
-        {"Grid Recall", GridRecallDefinition.Get()}
+        {GridRecallConstants.Name, GridRecallDefinition.Get()}
     };
 }

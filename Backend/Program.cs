@@ -18,6 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<GameRepository>();
 builder.Services.AddScoped<GameMetricService>();
+builder.Services.AddScoped<GridRecallService>();
 builder.Services.AddHostedService<GameInitializer>();
 
 builder.Services.AddControllers(options =>

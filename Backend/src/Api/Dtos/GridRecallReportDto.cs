@@ -1,15 +1,21 @@
-﻿namespace Backend.Api.Dtos;
+﻿using Backend.Games.Objects;
+
+namespace Backend.Api.Dtos;
 
 public class GridRecallReportDto
 {
-    public Dictionary<int, int> UsersPerLevelMap { get; set; } = [];
-    public double FinalLevelPercentile { get; set; }
-    public int TotalUsers { get; set; }
+    public int TimesPlayed { get; set; }
+    public int Level { get; set; }
+    public double LevelPercentile { get; set; }
+    public Dictionary<int, int> UsersPerLevel { get; set; } = [];
+    
+    public GridRecallReportDto() { }
 
-    public GridRecallReportDto(Dictionary<int, int> histogram, double finalLevelPercentile, int totalUsers)
+    public GridRecallReportDto(GridRecallReport report)
     {
-        UsersPerLevelMap = histogram;
-        FinalLevelPercentile = finalLevelPercentile;
-        TotalUsers = totalUsers;
+        TimesPlayed = report.TimesPlayed;
+        Level = report.Level;
+        LevelPercentile = report.LevelPercentile;
+        UsersPerLevel = report.UsersPerLevel;
     }
 }

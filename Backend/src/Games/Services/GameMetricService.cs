@@ -25,7 +25,7 @@ public class GameMetricService(GameRepository gameRepository)
 
         if (bucket is null)
         {
-            //create bucket for each metric range until you reach value
+            //TODO: create bucket for each metric range until you reach value
             bucket = new HistogramBucket
             {
                 GameMetric = metric,

@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="src\Core\" />
+      <Folder Include="src\Games\Services\" />
     </ItemGroup>
 
 </Project>

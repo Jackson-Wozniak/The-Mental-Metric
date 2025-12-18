@@ -1,6 +1,9 @@
 //object to hold the users performance of grid recall after game ends
 export interface GridRecallPerformanceStats{
-    finalLevel: number
+    level: number,
+    totalGuesses: number,
+    correctGuesses: number,
+    maxCorrectStreak: number,
 }
 
 //object to be returned by server for percentile and comparison info later on

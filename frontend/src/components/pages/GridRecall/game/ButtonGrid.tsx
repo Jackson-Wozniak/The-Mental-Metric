@@ -24,9 +24,9 @@ export interface GridButtonInfo {
 const ButtonGrid: React.FC<{
     level: number,
     livesLeft: number,
-    handleIncorrectGuess: () => void,
+    handleGuess: (isCorrect: boolean) => void,
     completeLevel: () => void
-}> = ({level, handleIncorrectGuess, completeLevel}) => {
+}> = ({level, handleGuess, completeLevel}) => {
     const theme = useTheme();
 
     const [buttonsInfo, setButtonsInfo] = useState<GridButtonInfo[]>([]);
@@ -94,6 +94,7 @@ const ButtonGrid: React.FC<{
             if(button.didFlashThisLevel){
                 if(button.currentState == ButtonState.GUESSED_CORRECT) return; //no duplicate correct
                 button.currentState = ButtonState.GUESSED_CORRECT;
+                handleGuess(true);
                 if(correctGuessesLeft <= 1){
                     completeLevel();
                     return;
@@ -105,7 +106,7 @@ const ButtonGrid: React.FC<{
             //incorrect guess
             if(button.currentState == ButtonState.GUESSES_INCORRECT) return; //no duplicate incorrect
             button.currentState = ButtonState.GUESSES_INCORRECT;
-            handleIncorrectGuess();
+            handleGuess(false);
         });
 
         setButtonsInfo([...buttonsCopy]);

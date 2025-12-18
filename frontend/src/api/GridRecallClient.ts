@@ -3,6 +3,8 @@ import type { GridRecallPerformanceReport, GridRecallPerformanceStats } from "..
 const BaseUrl = "https://localhost:7033/api/GridRecall";
 
 export async function fetchCreatePerformanceReport(stats: GridRecallPerformanceStats): Promise<GridRecallPerformanceReport>{
+    console.log(stats);
+    
     const response = await fetch(`${BaseUrl}`, {
         method: "POST",
         headers: {

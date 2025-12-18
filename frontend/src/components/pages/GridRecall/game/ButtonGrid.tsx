@@ -27,6 +27,8 @@ const ButtonGrid: React.FC<{
     handleGuess: (isCorrect: boolean) => void,
     completeLevel: () => void
 }> = ({level, handleGuess, completeLevel}) => {
+    const [width, _] = useState(findGridLevelProperties(level).gridWidth);
+
     const theme = useTheme();
 
     const [buttonsInfo, setButtonsInfo] = useState<GridButtonInfo[]>([]);
@@ -42,34 +44,36 @@ const ButtonGrid: React.FC<{
         setTimerRunning(true);
 
         const timer = setTimeout(() => {
-            buttons.forEach(b => b.currentState = ButtonState.NONE);
-            setButtonsInfo([...buttons]);
+            setButtonsInfo(buttons.map(b => ({
+                ...b,
+                currentState: ButtonState.NONE
+            })));
             setTimerRunning(false);
         }, properties.buttonFlashMillis);
 
         return () => clearTimeout(timer);
-    }, []);
+    }, [level]);
 
     function generateButtons(properties: GridLevelProperties){
         const flashesLeft = properties.buttonFlashCount;
-        const flashedButtonIds: number[] = [];
+        const flashedButtonIds = new Set<number>();
 
         for(let i = 0 ; i < flashesLeft; i++){
             const row = getRandomNumber(0, properties.gridWidth);
             const col = getRandomNumber(0, properties.gridWidth);
-            const index = (row * MAX_GRID_WIDTH) + col;
-            if(flashedButtonIds.includes(index)){
+            const index = (row * properties.gridWidth) + col;
+            if(flashedButtonIds.has(index)){
                 i--;
                 continue;
             }
-            flashedButtonIds.push(index);
+            flashedButtonIds.add(index);
         }
 
         let createdButtons: GridButtonInfo[] = [];
         for(let i = 0 ; i < properties.gridWidth; i++){
             for(let j = 0; j < properties.gridWidth; j++){
-                const index = (i * MAX_GRID_WIDTH) + j;
-                const didFlash: boolean = flashedButtonIds.includes(index);
+                const index = (i * properties.gridWidth) + j;
+                const didFlash: boolean = flashedButtonIds.has(index);
                 const state: ButtonState = didFlash ? ButtonState.FLASHED : ButtonState.NONE;
                 createdButtons.push({
                     id: index,
@@ -85,31 +89,40 @@ const ButtonGrid: React.FC<{
         //ignore presses before level starts and buttons are set
         if(timerRunning) return;
 
-        const buttonsCopy = [...buttonsInfo];
-        
-        buttonsCopy.forEach((button: GridButtonInfo) => {
-            if(button.id != id) return;
+        let result: "correct" | "incorrect" | null = null;
+
+        setButtonsInfo(prev => {
+            const next = [...prev];
+            const button = next[id];
+            if(!button) return prev;
 
             //correct guess
             if(button.didFlashThisLevel){
-                if(button.currentState == ButtonState.GUESSED_CORRECT) return; //no duplicate correct
-                button.currentState = ButtonState.GUESSED_CORRECT;
-                handleGuess(true);
-                if(correctGuessesLeft <= 1){
-                    completeLevel();
-                    return;
-                }
-                setCorrectGuessesLeft(correctGuessesLeft - 1);
-                return;
+                if (button.currentState === ButtonState.GUESSED_CORRECT) return prev; //no duplicate correct
+                next[id] = { ...button, currentState: ButtonState.GUESSED_CORRECT };
+                result = "correct";
+            }else{
+                //incorrect guess
+                if(button.currentState == ButtonState.GUESSES_INCORRECT) return prev; //no duplicate incorrect
+                next[id] = { ...button, currentState: ButtonState.GUESSES_INCORRECT };
+                result = "incorrect";
             }
-
-            //incorrect guess
-            if(button.currentState == ButtonState.GUESSES_INCORRECT) return; //no duplicate incorrect
-            button.currentState = ButtonState.GUESSES_INCORRECT;
-            handleGuess(false);
+        
+            return next;
         });
 
-        setButtonsInfo([...buttonsCopy]);
+        if(result == null) return;
+
+        if(result === "correct"){
+            handleGuess(true);
+            if(correctGuessesLeft <= 1){
+                completeLevel();
+            }else{
+                setCorrectGuessesLeft(correctGuessesLeft - 1)
+            }
+        }else{
+            handleGuess(false);
+        }
     }
     
     return (
@@ -117,7 +130,7 @@ const ButtonGrid: React.FC<{
             sx={{
                 aspectRatio: "1 / 1",
                 display: "grid",
-                gridTemplateColumns: `repeat(${findGridLevelProperties(level).gridWidth}, 1fr)`,
+                gridTemplateColumns: `repeat(${width}, 1fr)`,
                 width: Math.min(theme.width, theme.height) * .75, 
                 height: Math.min(theme.width, theme.height) * .75,
                 marginBottom: "15px"

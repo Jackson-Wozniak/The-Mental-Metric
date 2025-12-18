@@ -59,9 +59,7 @@ const ButtonGrid: React.FC<{
         const flashedButtonIds = new Set<number>();
 
         for(let i = 0 ; i < flashesLeft; i++){
-            const row = getRandomNumber(0, properties.gridWidth);
-            const col = getRandomNumber(0, properties.gridWidth);
-            const index = (row * properties.gridWidth) + col;
+            const index = getRandomNumber(0, properties.gridWidth * properties.gridWidth);
             if(flashedButtonIds.has(index)){
                 i--;
                 continue;
@@ -70,17 +68,14 @@ const ButtonGrid: React.FC<{
         }
 
         let createdButtons: GridButtonInfo[] = [];
-        for(let i = 0 ; i < properties.gridWidth; i++){
-            for(let j = 0; j < properties.gridWidth; j++){
-                const index = (i * properties.gridWidth) + j;
-                const didFlash: boolean = flashedButtonIds.has(index);
-                const state: ButtonState = didFlash ? ButtonState.FLASHED : ButtonState.NONE;
-                createdButtons.push({
-                    id: index,
-                    currentState: state,
-                    didFlashThisLevel: didFlash
-                });
-            }
+        for(let i = 0 ; i < properties.gridWidth * properties.gridWidth; i++){
+            const didFlash: boolean = flashedButtonIds.has(i);
+            const state: ButtonState = didFlash ? ButtonState.FLASHED : ButtonState.NONE;
+            createdButtons.push({
+                id: i,
+                currentState: state,
+                didFlashThisLevel: didFlash
+            });
         }
         return createdButtons;
     }

@@ -1,4 +1,5 @@
-﻿using Backend.Games.Entities;
+﻿using Backend.Games.Constants;
+using Backend.Games.Entities;
 
 namespace Backend.Games.Definitions;
 
@@ -10,19 +11,26 @@ public class GridRecallDefinition
     {
         var game = new Game
         {
-            Name = "Grid Recall",
+            Name = GridRecallConstants.Name,
             TimesPlayed = 0,
             Metrics = new List<GameMetric>()
         };
-        
+        game.Metrics.Add(LevelMetric(game));
+        game.Metrics.Add(CorrectStreakMetric(game));
+        game.Metrics.Add(AccuracyRateMetric(game));
+
+        return game;
+    }
+
+    private static GameMetric LevelMetric(Game game)
+    {
         var metric = new GameMetric
         {
             Game = game,
-            MetricName = "Level",
+            MetricName = GridRecallConstants.LevelMetricName,
             HistogramBucketDelta = 0,
-            HistogramBuckets = new List<HistogramBucket>()
+            HistogramBuckets = []
         };
-        game.Metrics.Add(metric);
 
         for (int i = 1; i < 30; i++)
         {
@@ -35,6 +43,30 @@ public class GridRecallDefinition
             });
         }
 
-        return game;
+        return metric;
+    }
+
+    private static GameMetric CorrectStreakMetric(Game game)
+    {
+        var metric = new GameMetric
+        {
+            Game = game,
+            MetricName = GridRecallConstants.CorrectStreakMetricName,
+            HistogramBucketDelta = 0,
+            HistogramBuckets = []
+        };
+        return metric;
+    }
+    
+    private static GameMetric AccuracyRateMetric(Game game)
+    {
+        var metric = new GameMetric
+        {
+            Game = game,
+            MetricName = GridRecallConstants.AccuracyRateMetricName,
+            HistogramBucketDelta = 0,
+            HistogramBuckets = []
+        };
+        return metric;
     }
 }

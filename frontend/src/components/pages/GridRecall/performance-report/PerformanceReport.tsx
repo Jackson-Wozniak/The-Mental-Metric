@@ -10,7 +10,7 @@ const PerformanceReport: React.FC<{
 
     function mapToString(){
         let customString = '';
-        report.usersPerLevelMap.forEach((value, key) => {
+        Object.entries(report.usersPerLevel).forEach((value, key) => {
             customString += `${key}: ${value}, `;
         });
         return customString;
@@ -18,11 +18,11 @@ const PerformanceReport: React.FC<{
 
     return (
         <CenteredFlexBox displayDirection="column" sx={{color: theme.palette.text.primary}}>
-            <Typography>Percentile: {report.finalLevelPercentile}</Typography>
-            <Typography>Total Users: {report.totalUsers}</Typography>
+            <Typography>Percentile: {report.levelPercentile}</Typography>
+            <Typography>Total Users: {report.timesPlayed}</Typography>
             <Typography>Histogram: {mapToString()}</Typography>
 
-            <LineChart labels={Array.from(report.usersPerLevelMap.keys())} values={Array.from(report.usersPerLevelMap.values())}/>
+            <LineChart labels={Object.keys(report.usersPerLevel)} values={Object.values(report.usersPerLevel)}/>
         </CenteredFlexBox>
     )
 }

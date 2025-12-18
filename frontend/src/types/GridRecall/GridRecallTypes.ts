@@ -8,7 +8,8 @@ export interface GridRecallPerformanceStats{
 
 //object to be returned by server for percentile and comparison info later on
 export interface GridRecallPerformanceReport{
-    usersPerLevelMap: Map<number, number>,
-    finalLevelPercentile: number,
-    totalUsers: number
+    usersPerLevel: Map<number, number>,
+    levelPercentile: number,
+    level: number,
+    timesPlayed: number
 }

@@ -9,6 +9,14 @@ public class GridRecallReportDto
     public double LevelPercentile { get; set; }
     public Dictionary<int, int> UsersPerLevel { get; set; } = [];
     
+    public double AccuracyRate { get; set; }
+    public double AccuracyRatePercentile { get; set; }
+    public Dictionary<double, int> UsersPerAccuracyRate { get; set; } = [];
+    
+    public int CorrectStreak { get; set; }
+    public double CorrectStreakPercentile { get; set; }
+    public Dictionary<int, int> UsersPerCorrectStreak { get; set; } = [];
+    
     public GridRecallReportDto() { }
 
     public GridRecallReportDto(GridRecallReport report)
@@ -17,5 +25,11 @@ public class GridRecallReportDto
         Level = report.Level;
         LevelPercentile = report.LevelPercentile;
         UsersPerLevel = report.UsersPerLevel;
+        AccuracyRate = report.AccuracyRate;
+        AccuracyRatePercentile = report.AccuracyRatePercentile;
+        UsersPerAccuracyRate = report.UsersPerAccuracyRate;
+        CorrectStreak = report.CorrectStreak;
+        CorrectStreakPercentile = report.CorrectStreakPercentile;
+        UsersPerCorrectStreak = report.UsersPerCorrectStreak;
     }
 }

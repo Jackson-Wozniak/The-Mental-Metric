@@ -13,12 +13,34 @@ public class GridRecallService(GameMetricService gameMetricService)
             GridRecallConstants.Name, 
             GridRecallConstants.LevelMetricName, 
             stats.Level);
+        var correctStreakMetric = gameMetricService.InsertHistogramEntry(
+            GridRecallConstants.Name, GridRecallConstants.CorrectStreakMetricName,
+            stats.CorrectStreak);
+        var accuracyRateMetric = gameMetricService.InsertHistogramEntry(
+            GridRecallConstants.Name, GridRecallConstants.AccuracyRateMetricName,
+            Math.Round(stats.AccuracyRate));
 
         var usersPerLevel = levelMetric.HistogramBuckets
             .ToDictionary(b => (int)b.Value, b => (int)b.Count);
         var timesPlayed = usersPerLevel.Values.Sum();
         var levelPercentile = PercentileCalculator.Percentile(stats.Level, usersPerLevel);
 
-        return new GridRecallReport(timesPlayed, stats.Level, levelPercentile, usersPerLevel);
+        var usersPerAccuracyRate = accuracyRateMetric.HistogramBuckets
+            .ToDictionary(b => b.Value, b => (int)b.Count);
+        var accuracyPercentile = PercentileCalculator.Percentile(stats.AccuracyRate, usersPerAccuracyRate);
+
+        var usersPerStreak = correctStreakMetric.HistogramBuckets
+            .ToDictionary(b => (int)b.Value, b => (int)b.Count);
+        var streakPercentile = PercentileCalculator.Percentile(stats.CorrectStreak, usersPerStreak);
+        
+        return new GridRecallReport(timesPlayed, stats.Level, levelPercentile, usersPerLevel)
+        {
+            AccuracyRate = stats.AccuracyRate,
+            AccuracyRatePercentile = accuracyPercentile,
+            UsersPerAccuracyRate = usersPerAccuracyRate,
+            CorrectStreak = stats.CorrectStreak,
+            CorrectStreakPercentile = streakPercentile,
+            UsersPerCorrectStreak = usersPerStreak
+        };
     }
 }

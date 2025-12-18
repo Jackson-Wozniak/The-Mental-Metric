@@ -13,4 +13,16 @@ public static class PercentileCalculator
         double percentile = ((double) usersBelow / totalUsers) * 100.0;
         return Math.Round(percentile, 2);
     }
+    
+    public static double Percentile(double value, Dictionary<double, int> usersPerValue)
+    {
+        int totalUsers = usersPerValue.Values.Sum();
+        if (totalUsers is 0) return 0.00;
+        int usersBelow = usersPerValue
+            .Where(u => u.Key <= value)
+            .Select(u => u.Value)
+            .Sum();
+        double percentile = ((double) usersBelow / totalUsers) * 100.0;
+        return Math.Round(percentile, 2);
+    }
 }

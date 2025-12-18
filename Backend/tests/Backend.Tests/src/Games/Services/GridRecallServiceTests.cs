@@ -26,10 +26,7 @@ public class GridRecallServiceTests
         
         repository.Save(GridRecallDefinition.Get());
 
-        var report = gridRecallService.CreateReport(new GridRecallStats
-        {
-            Level = 1
-        });
+        var report = gridRecallService.CreateReport(new GridRecallStats(1, 0, 0,0));
         
         Assert.Equal(1, report.TimesPlayed);
         Assert.Equal(100.00, report.LevelPercentile);
@@ -52,10 +49,7 @@ public class GridRecallServiceTests
         
         repository.Save(game);
 
-        var report = gridRecallService.CreateReport(new GridRecallStats
-        {
-            Level = 2
-        });
+        var report = gridRecallService.CreateReport(new GridRecallStats(2, 0, 0, 0));
         
         Assert.Equal(4, report.TimesPlayed);
         Assert.Equal(75.00, report.LevelPercentile);

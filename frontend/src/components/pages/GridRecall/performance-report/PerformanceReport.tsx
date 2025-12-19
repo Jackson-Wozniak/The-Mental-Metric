@@ -8,9 +8,9 @@ const PerformanceReport: React.FC<{
 }> = ({report}) => {
     const theme = useTheme();
 
-    function mapToString(){
+    function mapToString(map: Map<number, number>){
         let customString = '';
-        Object.entries(report.usersPerLevel).forEach((value, key) => {
+        Object.entries(map).forEach((value, key) => {
             customString += `${key}: ${value}, `;
         });
         return customString;
@@ -18,11 +18,16 @@ const PerformanceReport: React.FC<{
 
     return (
         <CenteredFlexBox displayDirection="column" sx={{color: theme.palette.text.primary}}>
-            <Typography>Percentile: {report.levelPercentile}</Typography>
             <Typography>Total Users: {report.timesPlayed}</Typography>
-            <Typography>Histogram: {mapToString()}</Typography>
+
+            <Typography>Level: {report.level} | Top {report.levelPercentile}%</Typography>
+
+            <Typography>Accuracy Rate: {report.accuracyRate}% | Top {report.accuracyRatePercentile}%</Typography>
+            <Typography>Correct Streak: {report.correctStreak} | Top {report.correctStreakPercentile}%</Typography>
 
             <LineChart labels={Object.keys(report.usersPerLevel)} values={Object.values(report.usersPerLevel)}/>
+            <LineChart labels={Object.keys(report.usersPerAccuracyRate)} values={Object.values(report.usersPerAccuracyRate)}/>
+            <LineChart labels={Object.keys(report.usersPerCorrectStreak)} values={Object.values(report.usersPerCorrectStreak)}/>
         </CenteredFlexBox>
     )
 }

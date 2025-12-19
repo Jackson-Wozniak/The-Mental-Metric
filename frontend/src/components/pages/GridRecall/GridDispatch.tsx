@@ -37,7 +37,7 @@ export const GridRecallReducer = (state: GridRecallState, action: GridRecallActi
         }
         case "HandleGuess": {
             const isCorrect: boolean = action.payload;
-            const currentCorrectStreak = state.currentCorrectStreak + (isCorrect ? 1 : 0);
+            const currentCorrectStreak = isCorrect ? (state.currentCorrectStreak + 1) : 0;
             const maxCorrectStreak = currentCorrectStreak > state.maxCorrectStreak ? currentCorrectStreak : state.maxCorrectStreak;
             return {
                 ...state,

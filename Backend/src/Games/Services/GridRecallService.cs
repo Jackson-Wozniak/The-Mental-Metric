@@ -32,15 +32,11 @@ public class GridRecallService(GameMetricService gameMetricService)
         var usersPerStreak = correctStreakMetric.HistogramBuckets
             .ToDictionary(b => (int)b.Value, b => (int)b.Count);
         var streakPercentile = PercentileCalculator.Percentile(stats.CorrectStreak, usersPerStreak);
-        
-        return new GridRecallReport(timesPlayed, stats.Level, levelPercentile, usersPerLevel)
-        {
-            AccuracyRate = stats.AccuracyRate,
-            AccuracyRatePercentile = accuracyPercentile,
-            UsersPerAccuracyRate = usersPerAccuracyRate,
-            CorrectStreak = stats.CorrectStreak,
-            CorrectStreakPercentile = streakPercentile,
-            UsersPerCorrectStreak = usersPerStreak
-        };
+
+        return new GridRecallReport.Builder(timesPlayed)
+            .LevelStats(stats.Level, levelPercentile, usersPerLevel)
+            .CorrectStreakStats(stats.CorrectStreak, streakPercentile, usersPerStreak)
+            .AccuracyRateStats(stats.AccuracyRate, accuracyPercentile, usersPerAccuracyRate)
+            .Build();
     }
 }

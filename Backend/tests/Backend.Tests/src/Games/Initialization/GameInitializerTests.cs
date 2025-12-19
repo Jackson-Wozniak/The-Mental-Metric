@@ -1,5 +1,6 @@
 ﻿using Backend.Data;
 using Backend.Games.Constants;
+using Backend.Games.Definitions;
 using Backend.Games.Initialization;
 using Backend.Games.Repositories;
 using Backend.Tests.Mocks;
@@ -28,7 +29,7 @@ public class GameInitializerTests
     [Fact]
     public async Task ExecuteAsync_EmptyDatabase_AddsAllGames()
     {
-        var games = GameConstants.GameDefinitions;
+        var names = GameConstants.GameNames;
         var provider = BuildServiceProvider();
         var repository = provider.GetRequiredService<GameRepository>();
         var logger = provider.GetRequiredService<ListLogger<GameInitializer>>();
@@ -36,13 +37,13 @@ public class GameInitializerTests
 
         await initializer.StartAsync(CancellationToken.None);
         
-        Assert.Equal(games.Count, repository.Count());
-        foreach (var game in games)
+        Assert.Equal(names.Count, repository.Count());
+        foreach (var name in names)
         {
-            Assert.NotNull(repository.FindByName(game.Key));
+            Assert.NotNull(repository.FindByName(name));
         }
         
-        Assert.Equal($"New games saved on startup: {string.Join(", ", games.Keys)}", logger.Messages.Last());
+        Assert.Equal($"New games saved on startup: {string.Join(", ", names)}", logger.Messages.Last());
     }
 
     [Fact]
@@ -57,5 +58,38 @@ public class GameInitializerTests
         await initializer.StartAsync(CancellationToken.None);
         
         Assert.Equal("All games previously saved on startup", logger.Messages.Last());
+    }
+    
+    [Fact]
+    public async Task ExecuteAsync_MissingMetrics_UpdatesGames()
+    {
+        var provider = BuildServiceProvider();
+        var repository = provider.GetRequiredService<GameRepository>();
+        var logger = provider.GetRequiredService<ListLogger<GameInitializer>>();
+        var initializer = new GameInitializer(logger, provider);
+
+        await initializer.StartAsync(CancellationToken.None);
+        
+        var gridRecall = repository.FindByName(GridRecallConstants.Name);
+        Assert.NotNull(gridRecall);
+        gridRecall.Metrics = [];
+        repository.Update(gridRecall);
+        
+        await initializer.StartAsync(CancellationToken.None);
+        
+        Assert.Equal($"New games saved on startup: {GridRecallConstants.Name}", logger.Messages.Last());
+        
+        gridRecall = repository.FindByName(GridRecallConstants.Name);
+        Assert.NotNull(gridRecall);
+
+        var existingMetricNames = gridRecall.Metrics
+            .Select(m => m.MetricName)
+            .ToHashSet();
+        
+        var missingMetrics = GridRecallDefinition.Get().Metrics
+            .Where(m => !existingMetricNames.Contains(m.MetricName))
+            .ToList();
+        
+        Assert.Empty(missingMetrics);
     }
 }

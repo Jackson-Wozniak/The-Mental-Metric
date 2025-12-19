@@ -29,6 +29,7 @@ public class GameRepository(ApplicationDbContext context)
         return context.Games
             .Include(g => g.Metrics)
             .ThenInclude(m => m.HistogramBuckets)
+            .AsSplitQuery()
             .SingleOrDefault(g => g.Id == id);
     }
     
@@ -37,7 +38,16 @@ public class GameRepository(ApplicationDbContext context)
         return context.Games
             .Include(g => g.Metrics)
             .ThenInclude(m => m.HistogramBuckets)
+            .AsSplitQuery()
             .SingleOrDefault(g => g.Name == name);
+    }
+
+    public async Task<List<Game>> GetAllUntrackedAsync()
+    {
+        return await context.Games
+            .Include(g => g.Metrics)
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public int Count()

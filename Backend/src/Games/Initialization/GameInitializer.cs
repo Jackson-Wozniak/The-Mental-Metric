@@ -1,5 +1,4 @@
-﻿using Backend.Games.Entities;
-using Backend.Games.Repositories;
+﻿using Backend.Games.Repositories;
 using static Backend.Games.Constants.GameConstants;
 
 namespace Backend.Games.Initialization;
@@ -22,11 +21,34 @@ public class GameInitializer(
             using var scope = serviceProvider.CreateScope();
             var gameRepository = scope.ServiceProvider.GetRequiredService<GameRepository>();
 
-            foreach (KeyValuePair<string, Game> game in GameDefinitions)
+            var dbGames = await gameRepository.GetAllUntrackedAsync();
+            var dbGamesByName = dbGames.ToDictionary(g => g.Name);
+            
+            foreach (var name in GameNames)
             {
-                if (gameRepository.FindByName(game.Key) is not null) continue;
-                newlySavedGames.Add(game.Key);
-                await gameRepository.SaveAsync(game.Value);
+                if (!dbGamesByName.TryGetValue(name, out var dbGame))
+                {
+                    newlySavedGames.Add(name);
+                    await gameRepository.SaveAsync(GetGameDefinition(name));
+                    continue;
+                }
+                
+                var existingMetricNames = dbGame.Metrics
+                    .Select(m => m.MetricName)
+                    .ToHashSet();
+
+                var newMetrics = GetGameDefinition(name).Metrics
+                    .Where(m => !existingMetricNames.Contains(m.MetricName))
+                    .ToList();
+                
+                if (newMetrics.Count > 0)
+                {
+                    var trackedGame = gameRepository.FindByName(name);
+                    if(trackedGame is null) continue;
+                    newlySavedGames.Add(name);
+                    trackedGame.Metrics.AddRange(newMetrics);
+                    gameRepository.Update(trackedGame);
+                }
             }
 
             var logMessage = newlySavedGames.Any()

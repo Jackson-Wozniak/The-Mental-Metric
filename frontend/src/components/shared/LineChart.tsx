@@ -3,38 +3,59 @@ import { Line } from "react-chartjs-2";
 import 'chart.js/auto';
 import CenteredFlexBox from "./CenteredFlexBox";
 import { useTheme } from "@mui/material";
+import type { ChartOptions } from "chart.js/auto";
+import { color } from "chart.js/helpers";
 
 const LineChart: React.FC<{
     labels: any[],
-    values: number[]
-}> = ({labels, values}) => {
+    values: number[],
+    title?: string,
+    xLabel?: string,
+    yLabel?: string,
+    type?: "number" | "percent"
+}> = ({labels, values, title, xLabel, yLabel, type = "number"}) => {
     const theme = useTheme();
 
-    const options = {
+    const options: ChartOptions<"line"> = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'top' as const,
-                color: theme.palette.text.secondary,
+                display: false
             },
             title: {
-                display: true,
-                text: 'Chart.js Line Chart',
-                color: theme.palette.text.secondary,
+                display: !!title,
+                text: title,
+                color: theme.palette.primary.main,
             },
         },
         scales: {
             x: {
+                type: "linear",
+                title: {
+                    display: !!xLabel,
+                    text: xLabel,
+                    color: theme.palette.primary.main
+                },
                 ticks: {
-                    color: theme.palette.text.secondary,
+                    stepSize: 1,
+                    color: theme.palette.text.primary,
+                    callback: function(value: any) {
+                        if(type === "percent") return value + "%"
+                        return value;
+                    }
                 }
             },
             y: {
                 beginAtZero: true,
+                title: {
+                    display: !!yLabel,
+                    text: yLabel,
+                    color: theme.palette.primary.main
+                },
                 ticks: {
                     stepSize: 1,
-                    color: theme.palette.text.secondary,
+                    color: theme.palette.text.primary,
                 }
             }
         }
@@ -46,14 +67,14 @@ const LineChart: React.FC<{
             {
                 label: 'Dataset 1',
                 data: values,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                pointRadius: 0,
+                color: theme.palette.primary.main,
             },
         ],
     };
 
     return (
-        <CenteredFlexBox displayDirection="row" sx={{width: "60%", height: "250px"}}>
+        <CenteredFlexBox displayDirection="row" sx={{width: "30%", height: "250px"}}>
             <Line data={data} options={options} height="100%" width="100%" />
         </CenteredFlexBox>
     )

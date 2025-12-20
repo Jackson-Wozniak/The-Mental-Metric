@@ -22,9 +22,8 @@
 
     <ItemGroup>
       <Folder Include="src\Core\Infrastructure\" />
-      <Folder Include="src\Core\Interfaes\" />
+      <Folder Include="src\Core\Interfaces\" />
       <Folder Include="src\Core\Utils\" />
-      <Folder Include="tests\" />
     </ItemGroup>
 
     <ItemGroup>

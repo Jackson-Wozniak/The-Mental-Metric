@@ -64,7 +64,7 @@ public class GridRecallDefinition
         {
             Game = game,
             MetricName = GridRecallConstants.AccuracyRateMetricName,
-            HistogramBucketDelta = 0,
+            HistogramBucketDelta = .5,
             HistogramBuckets = []
         };
         return metric;

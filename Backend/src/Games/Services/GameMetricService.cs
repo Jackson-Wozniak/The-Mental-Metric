@@ -8,11 +8,6 @@ public class GameMetricService(GameRepository gameRepository)
 {
     public GameMetric InsertHistogramEntry(string gameName, string metricName, double value)
     {
-        //pull the histogram buckets for the game
-        //find the bucket the value fits into
-            //if no bucket exists, use the metric's value range to insert new buckets
-        //increment bucket count
-        //return percentile of value
         Game? game = gameRepository.FindByName(gameName);
         if (game is null) throw new NotFoundException("No game can be found");
 
@@ -26,14 +21,7 @@ public class GameMetricService(GameRepository gameRepository)
         if (bucket is null)
         {
             //TODO: create bucket for each metric range until you reach value
-            bucket = new HistogramBucket
-            {
-                GameMetric = metric,
-                Count = 1,
-                Value = value,
-                Delta = metric.HistogramBucketDelta
-            };
-            metric.HistogramBuckets.Add(bucket);
+            bucket = AddMissingBuckets(metric, value);
         }
         else
         {
@@ -43,5 +31,38 @@ public class GameMetricService(GameRepository gameRepository)
         gameRepository.Update(game);
 
         return metric;
+    }
+    
+    public HistogramBucket AddMissingBuckets(GameMetric metric, double value)
+    {
+        double delta = metric.HistogramBucketDelta;
+        double step = delta == 0 ? 1 : delta;
+
+        double startValue = metric.HistogramBuckets.Count > 0
+            ? metric.HistogramBuckets.Max(b => b.Value) + step
+            : 0;
+
+        HistogramBucket? finalBucket = null;
+
+        for (double current = startValue; current <= value; current += step)
+        {
+            var bucket = new HistogramBucket
+            {
+                GameMetric = metric,
+                Value = current,
+                Delta = delta,
+                Count = current.Equals(value) ? 1 : 0
+            };
+
+            metric.HistogramBuckets.Add(bucket);
+
+            if (current.Equals(value))
+            {
+                finalBucket = bucket;
+                break;
+            }
+        }
+
+        return finalBucket!;
     }
 }

@@ -44,18 +44,15 @@
 
 ### Grid Recall <a id="grid-recall"></a>
 
-A grid of buttons is shown. Certain buttons will flash briefly and the user must
-  press the buttons that flashed to remake the grid
+#### Overview
 
-Stats to track:
+Grid Recall is a visual-memory focused game where a series of buttons on a grid briefly flash in a specific sequence. Once the grid resets, the user must click each of the buttons that changed color. As the game progresses, the grid grows in size, and the number of buttons that flash increase as well. The game ends when the user incorrectly guesses a total of 10 buttons.
 
-- Final Level
+#### Tracked Metrics
 
-- Accuracy Rate
-
-- Accuracy Rate per Button (button heatmap)
-
-- Recall and Total Speed to press buttons
+- Level: Tracks the highest level reached by the user during the playthrough
+- Maximum Correct Streak: Shows the highest streak of correct guesses. Streaks carry over between levels, and resets on an incorrect guess
+- Accuracy Rate: The percentage of correct guesses in relation to total guesses
 
 ### Peripheral Focus <a id="peripheral-focus"></a>
 

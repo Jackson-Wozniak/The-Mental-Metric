@@ -27,7 +27,7 @@ const PerformanceReport: React.FC<{
 
             <Box width="90%" display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
                 <LineChart labels={Object.keys(report.usersPerLevel)} values={Object.values(report.usersPerLevel)} title="Level Distribution" xLabel="Level" yLabel="# of Users"/>
-                <LineChart labels={Object.keys(report.usersPerAccuracyRate)} values={Object.values(report.usersPerAccuracyRate)}title="Accuracy Rate Distribution" xLabel="Accuracy Rate (%)" yLabel="# of Users" type="percent"/>
+                <LineChart labels={Object.keys(report.usersPerAccuracyRate)} values={Object.values(report.usersPerAccuracyRate)}title="Accuracy Rate Distribution" xLabel="Accuracy Rate (%)" yLabel="# of Users" valueType="percent"/>
                 <LineChart labels={Object.keys(report.usersPerCorrectStreak)} values={Object.values(report.usersPerCorrectStreak)} title="Correct Streak Distribution" xLabel="Max Consecutive Correct" yLabel="# of Users"/>
             </Box>
         </CenteredFlexBox>

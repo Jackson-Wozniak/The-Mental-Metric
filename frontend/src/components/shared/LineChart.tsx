@@ -12,8 +12,8 @@ const LineChart: React.FC<{
     title?: string,
     xLabel?: string,
     yLabel?: string,
-    type?: "number" | "percent"
-}> = ({labels, values, title, xLabel, yLabel, type = "number"}) => {
+    valueType?: "number" | "percent"
+}> = ({labels, values, title, xLabel, yLabel, valueType = "number"}) => {
     const theme = useTheme();
 
     const options: ChartOptions<"line"> = {
@@ -31,7 +31,7 @@ const LineChart: React.FC<{
         },
         scales: {
             x: {
-                type: "linear",
+                type: valueType === "percent" ? "category" : "linear" as any,
                 title: {
                     display: !!xLabel,
                     text: xLabel,
@@ -41,7 +41,7 @@ const LineChart: React.FC<{
                     stepSize: 1,
                     color: theme.palette.text.primary,
                     callback: function(value: any) {
-                        if(type === "percent") return value + "%"
+                        if(valueType === "percent") return value + "%"
                         return value;
                     }
                 }

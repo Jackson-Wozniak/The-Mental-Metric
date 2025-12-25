@@ -4,6 +4,7 @@ using Backend.Games.Definitions;
 using Backend.Games.Initialization;
 using Backend.Games.Repositories;
 using Backend.Tests.Mocks;
+using Backend.Tests.TestSetup;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,45 +12,28 @@ namespace Backend.Tests.Games.Initialization;
 
 public class GameInitializerTests
 {
-    private IServiceProvider BuildServiceProvider()
-    {
-        var services = new ServiceCollection();
-
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
-
-        services.AddSingleton<GameRepository>();
-
-        var logger = new ListLogger<GameInitializer>();
-        services.AddSingleton<ListLogger<GameInitializer>>(logger);
-
-        return services.BuildServiceProvider();
-    }
 
     [Fact]
     public async Task ExecuteAsync_EmptyDatabase_AddsAllGames()
     {
         var names = GameConstants.GameNames;
-        var provider = BuildServiceProvider();
+        var provider = TestServiceProviderFactory.Create();
         var repository = provider.GetRequiredService<GameRepository>();
         var logger = provider.GetRequiredService<ListLogger<GameInitializer>>();
         var initializer = new GameInitializer(logger, provider);
-
         await initializer.StartAsync(CancellationToken.None);
-        
-        Assert.Equal(names.Count, repository.Count());
+        Assert.Equal(names.Count, repository.Count()); 
         foreach (var name in names)
         {
             Assert.NotNull(repository.FindByName(name));
         }
-        
         Assert.Equal($"New games saved on startup: {string.Join(", ", names)}", logger.Messages.Last());
     }
 
     [Fact]
     public async Task ExecuteAsync_MultipleRuns_PrintsEmptyLog()
     {
-        var provider = BuildServiceProvider();
+        var provider = TestServiceProviderFactory.Create();
         var logger = provider.GetRequiredService<ListLogger<GameInitializer>>();
         var initializer = new GameInitializer(logger, provider);
 
@@ -63,7 +47,7 @@ public class GameInitializerTests
     [Fact]
     public async Task ExecuteAsync_MissingMetrics_UpdatesGames()
     {
-        var provider = BuildServiceProvider();
+        var provider = TestServiceProviderFactory.Create();
         var repository = provider.GetRequiredService<GameRepository>();
         var logger = provider.GetRequiredService<ListLogger<GameInitializer>>();
         var initializer = new GameInitializer(logger, provider);

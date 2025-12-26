@@ -26,9 +26,13 @@ const GameGrid: React.FC<{
         gridRecallDispatch({type: "IncrementLevel"});
     }
 
-    function handleGuess(isCorrect: boolean){
+    function handleLevelBegin(timestamp: number){
+        gridRecallDispatch({type: "LevelReady", payload: {startedAt: timestamp}});
+    }
+
+    function handleGuess(buttonId: number, isCorrect: boolean, timestamp: number){
+        gridRecallDispatch({type: "HandleGuess", payload: {buttonId: buttonId, isCorrect: isCorrect, timestamp: timestamp}});
         if(!isCorrect){
-            gridRecallDispatch({type: "HandleGuess", payload: false});
             if(livesRemaining == 1){
                 handleGameEnd(toPerformanceStats(gridRecallState));
                 return;
@@ -36,14 +40,13 @@ const GameGrid: React.FC<{
             setLivesRemaining(livesRemaining - 1);
             return;
         }
-        gridRecallDispatch({type: "HandleGuess", payload: true});
     }
 
     return (
         <CenteredFlexBox displayDirection="column">
             <GridScoreboard level={gridRecallState.level} livesLeft={livesRemaining}/>
             <ButtonGrid level={gridRecallState.level} livesLeft={livesRemaining}
-                handleGuess={handleGuess} completeLevel={handleLevelEnd}/>
+                handleGuess={handleGuess} completeLevel={handleLevelEnd} beginLevelTracking={handleLevelBegin}/>
         </CenteredFlexBox>
     )
 }

@@ -24,9 +24,10 @@ export interface GridButtonInfo {
 const ButtonGrid: React.FC<{
     level: number,
     livesLeft: number,
-    handleGuess: (isCorrect: boolean) => void,
-    completeLevel: () => void
-}> = ({level, handleGuess, completeLevel}) => {
+    handleGuess: (buttonId: number, isCorrect: boolean, timestamp: number) => void,
+    completeLevel: () => void,
+    beginLevelTracking: (timestamp: number) => void
+}> = ({level, handleGuess, completeLevel, beginLevelTracking}) => {
     const [width, _] = useState(findGridLevelProperties(level).gridWidth);
 
     const theme = useTheme();
@@ -49,6 +50,7 @@ const ButtonGrid: React.FC<{
                 currentState: ButtonState.NONE
             })));
             setTimerRunning(false);
+            beginLevelTracking(Date.now());
         }, properties.buttonFlashMillis);
 
         return () => clearTimeout(timer);
@@ -83,6 +85,7 @@ const ButtonGrid: React.FC<{
     function handleButtonClick(id: number){
         //ignore presses before level starts and buttons are set
         if(timerRunning) return;
+        const timestamp = Date.now();
 
         let result: "correct" | "incorrect" | null = null;
 
@@ -108,15 +111,14 @@ const ButtonGrid: React.FC<{
 
         if(result == null) return;
 
+        handleGuess(id, result === "correct", timestamp);
+
         if(result === "correct"){
-            handleGuess(true);
             if(correctGuessesLeft <= 1){
                 completeLevel();
             }else{
                 setCorrectGuessesLeft(correctGuessesLeft - 1)
             }
-        }else{
-            handleGuess(false);
         }
     }
     
